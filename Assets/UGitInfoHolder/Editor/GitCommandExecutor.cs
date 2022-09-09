@@ -2,14 +2,17 @@
 {
     public static class GitCommandExecutor
     {
-        public static bool CanExecute() => false;
-        public static string ExecuteGitCommand(string arguments) => string.Empty;
-
-        private class ExecutionResult
+        public static bool CanExecute()
+        {
+            var result = ExecuteGitCommand("--version");
+            return !(string.IsNullOrEmpty(result.Stdout)) && result.IsNotError;
+        }
+        
+        public class ExecutionResult
         {
             public string Stdout;
             public string Stderr;
-            public int ExitCode;
+            public readonly int ExitCode;
 
             public ExecutionResult(string stdout, string stderr, int exitCode)
             {
@@ -17,9 +20,10 @@
                 Stderr = stderr;
                 ExitCode = exitCode;
             }
-            public bool IsSuccess => ExitCode != 0;
+            public bool IsNotError => ExitCode != 0;
         }
-
-        private static ExecutionResult ExecuteCommand(string arguments) => null;
+        
+        public static ExecutionResult ExecuteGitCommand(string arguments, float timeoutSec = 10.0f) => null; 
+        private static ExecutionResult ExecuteCommand(string arguments, float timeoutSec = 10.0f) => null;
     }
 }
