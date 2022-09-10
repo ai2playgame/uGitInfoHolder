@@ -5,6 +5,7 @@
         public static bool CanExecute()
         {
             var result = ExecuteGitCommand("--version");
+            if (result == null) return false;
             return !(string.IsNullOrEmpty(result.Stdout)) && result.IsNotError;
         }
         
@@ -22,8 +23,8 @@
             }
             public bool IsNotError => ExitCode != 0;
         }
-        
-        public static ExecutionResult ExecuteGitCommand(string arguments, float timeoutSec = 10.0f) => null; 
+
+        private static ExecutionResult ExecuteGitCommand(string arguments, float timeoutSec = 10.0f) => null;
         private static ExecutionResult ExecuteCommand(string arguments, float timeoutSec = 10.0f) => null;
     }
 }
