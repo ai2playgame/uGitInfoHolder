@@ -2,7 +2,7 @@
 using UnityEngine;
 using Application = UnityEngine.Device.Application;
 
-namespace UGitInfoHolder.Editor
+namespace UGitVersionHolder.Editor
 {
     public static class GitCommandExecutor
     {

@@ -1,6 +1,6 @@
 {
-    "name": "UGitHolder",
-    "rootNamespace": "UGitHolder",
+    "name": "UGitVersionHolder",
+    "rootNamespace": "UGitVersionHolder",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

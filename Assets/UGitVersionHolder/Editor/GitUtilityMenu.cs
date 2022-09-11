@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace UGitInfoHolder.Editor
+namespace UGitVersionHolder.Editor
 {
     public static class GitUtilityMenu
     {
