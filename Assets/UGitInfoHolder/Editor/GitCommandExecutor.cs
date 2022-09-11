@@ -25,17 +25,11 @@ namespace UGitInfoHolder.Editor
                 Stderr = stderr;
                 ExitCode = exitCode;
             }
-            public bool IsNotError => ExitCode != 0;
+            public bool IsNotError => ExitCode == 0;
         }
 
         public static ExecutionResult ExecuteGitCommand(string arguments, float timeoutSec = 10.0f)
         {
-            if (!CanExecute())
-            {
-                Debug.LogError("This computer can't execute git command.");
-                return null;
-            }
-
             return ExecuteCommand($"git {arguments}", timeoutSec);
         }
 
@@ -62,7 +56,7 @@ namespace UGitInfoHolder.Editor
                     return null;
                 }
                 process.StartInfo.FileName = cmdPath;
-                process.StartInfo.Arguments = $"/c{arguments}";
+                process.StartInfo.Arguments = $"/c {arguments}";
                 
                 // Prevent to show window
                 process.StartInfo.CreateNoWindow = true;
@@ -89,7 +83,7 @@ namespace UGitInfoHolder.Editor
                 
                 process.Close();
 
-                return new ExecutionResult(stdout, string.Empty, process.ExitCode);
+                return new ExecutionResult(stdout, string.Empty, /*process.ExitCode*/0);
             }
         }
     }
