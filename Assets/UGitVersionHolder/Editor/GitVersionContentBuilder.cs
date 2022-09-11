@@ -1,18 +1,19 @@
 ﻿using System.IO;
 using UGitVersionHolder.Runtime;
 using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 namespace UGitVersionHolder.Editor
 {
-    public static class GitVersionContentBuilder
+    public class GitVersionContentBuilder : IPreprocessBuildWithReport
     {
         private const string GitVersionContentRootDirectory = "Assets/UGitVersionHolder/";
         private const string GitVersionContentDirectory = GitVersionContentRootDirectory + "Resources/";
         private const string VersionContentPath = GitVersionContentDirectory + GitVersionContent.AssetName + ".asset";
         
-        [MenuItem("Git/Generate Git version content resources")]
-        public static void GenerateGitVersionContent()
+        private static void GenerateGitVersionContent()
         {
             GenerateGitignore();
 
@@ -52,6 +53,12 @@ namespace UGitVersionHolder.Editor
                 file.WriteLine("Resources/*");
                 file.WriteLine("Resources.meta");
             }
+        }
+
+        public int callbackOrder => 0;
+        public void OnPreprocessBuild(BuildReport report)
+        {
+            GenerateGitVersionContent();
         }
     }
 }
