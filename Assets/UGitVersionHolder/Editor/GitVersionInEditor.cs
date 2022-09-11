@@ -1,22 +1,22 @@
 ﻿namespace UGitVersionHolder.Editor
 {
-    public class GitVersion
+    public class GitVersionInEditor
     {
-        public GitVersion(string hash)
+        public GitVersionInEditor(string hash)
         {
             Hash = hash;
         }
 
         public string Hash { get; private set; }
 
-        public static GitVersion Generate()
+        public static GitVersionInEditor Generate()
         {
             var revParseResult = GitCommandExecutor.ExecuteGitCommand("rev-parse --short HEAD");
             var hash = revParseResult.Stdout;
 
-            return new GitVersion(hash);
+            return new GitVersionInEditor(hash);
         }
 
-        public static GitVersion Invalid => new GitVersion("INVALID");
+        public static GitVersionInEditor Invalid => new GitVersionInEditor("INVALID");
     }
 }

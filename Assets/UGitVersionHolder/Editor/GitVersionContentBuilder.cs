@@ -9,7 +9,7 @@ namespace UGitVersionHolder.Editor
     {
         private const string GitVersionContentRootDirectory = "Assets/UGitVersionHolder/";
         private const string GitVersionContentDirectory = GitVersionContentRootDirectory + "Resources/";
-        private const string VersionContentPath = GitVersionContentDirectory + GitVersionContent.AssetName;
+        private const string VersionContentPath = GitVersionContentDirectory + GitVersionContent.AssetName + ".asset";
         
         [MenuItem("Git/Generate Git version content resources")]
         public static void GenerateGitVersionContent()
@@ -18,14 +18,14 @@ namespace UGitVersionHolder.Editor
 
             var versionAsset = ScriptableObject.CreateInstance<GitVersionContent>();
 
-            GitVersion gitVersion = GitVersion.Invalid;
+            GitVersionInEditor gitVersionInEditor = GitVersionInEditor.Invalid;
             if (GitCommandExecutor.CanExecute())
             {
-                gitVersion = GitVersion.Generate();
+                gitVersionInEditor = GitVersionInEditor.Generate();
             }
 
             // コマンド実行結果から、ScriptableObjectに値を代入する
-            versionAsset.hash = gitVersion.Hash;
+            versionAsset.hash = gitVersionInEditor.Hash;
             
             // 古いScriptableObjectアセットが残っていたら削除
             AssetDatabase.DeleteAsset(VersionContentPath);
