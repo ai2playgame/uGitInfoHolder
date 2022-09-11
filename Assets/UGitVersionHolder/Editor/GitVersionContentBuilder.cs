@@ -7,17 +7,16 @@ namespace UGitVersionHolder.Editor
 {
     public static class GitVersionContentBuilder
     {
-        private const string GitVersionContentRootDirectory = "Assets/UGitVersionHolder/Resources/";
-        private const string VersionContentPath = GitVersionContentRootDirectory + GitVersionContent.AssetName;
+        private const string GitVersionContentRootDirectory = "Assets/UGitVersionHolder/";
+        private const string GitVersionContentDirectory = GitVersionContentRootDirectory + "Resources/";
+        private const string VersionContentPath = GitVersionContentDirectory + GitVersionContent.AssetName;
         
         [MenuItem("Git/Generate Git version content resources")]
-        private static void GenerateGitVersionContent()
+        public static void GenerateGitVersionContent()
         {
-            var versionAsset = AssetDatabase.LoadAssetAtPath<GitVersionContent>(VersionContentPath);
-            if (!versionAsset)
-            {
-                versionAsset = ScriptableObject.CreateInstance<GitVersionContent>();
-            }
+            GenerateGitignore();
+
+            var versionAsset = ScriptableObject.CreateInstance<GitVersionContent>();
 
             GitVersion gitVersion = GitVersion.Invalid;
             if (GitCommandExecutor.CanExecute())
@@ -32,11 +31,27 @@ namespace UGitVersionHolder.Editor
             AssetDatabase.DeleteAsset(VersionContentPath);
 
             // ScriptableObjectをアセットとしてResources以下に保存する
-            if (!Directory.Exists(GitVersionContentRootDirectory))
-                Directory.CreateDirectory(GitVersionContentRootDirectory);
+            if (!Directory.Exists(GitVersionContentDirectory))
+                Directory.CreateDirectory(GitVersionContentDirectory);
             AssetDatabase.CreateAsset(versionAsset, VersionContentPath);
             
             AssetDatabase.SaveAssets();
+        }
+
+        private static void GenerateGitignore()
+        {
+            if (!File.Exists(GitVersionContentRootDirectory + ".gitignore"))
+            {
+                Debug.Log($"Create .gitignore");
+            }
+
+            using (var file = File.CreateText(GitVersionContentRootDirectory + ".gitignore"))
+            {
+                file.WriteLine("# Generate by uGitVersionFolder");
+                file.WriteLine(".gitignore");
+                file.WriteLine("Resources/*");
+                file.WriteLine("Resources.meta");
+            }
         }
     }
 }
