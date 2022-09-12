@@ -64,13 +64,14 @@ namespace UGitVersionHolder.Editor
                 // Enable to read command's output
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardOutput = true;
-                // process.StartInfo.RedirectStandardError = true; // TODO: 標準出力と標準エラーを同時に取得する方法を探る
+                process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.RedirectStandardInput = false;
 
                 process.Start();
                 
                 // Read stdout and stderr
                 string stdout = process.StandardOutput.ReadToEnd();
+                string stderr = process.StandardError.ReadToEnd();
 
                 if (!process.WaitForExit((int)(timeoutSec * 1000)))
                 {
@@ -80,10 +81,11 @@ namespace UGitVersionHolder.Editor
                     process.WaitForExit();
                     return null;
                 }
-                
+
+                int exitCode = process.ExitCode;
                 process.Close();
 
-                return new ExecutionResult(stdout, string.Empty, /*process.ExitCode*/0);
+                return new ExecutionResult(stdout, stderr, exitCode);
             }
         }
     }
