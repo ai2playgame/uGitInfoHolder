@@ -10,7 +10,7 @@ namespace UGitVersionHolder.Editor
         {
             var result = ExecuteGitCommand("--version");
             if (result == null) return false;
-            return !(string.IsNullOrEmpty(result.Stdout)) && result.IsNotError;
+            return !(string.IsNullOrEmpty(result.Stdout)) && result.IsSuccess;
         }
         
         public class ExecutionResult
@@ -25,7 +25,7 @@ namespace UGitVersionHolder.Editor
                 Stderr = stderr;
                 ExitCode = exitCode;
             }
-            public bool IsNotError => ExitCode == 0;
+            public bool IsSuccess => ExitCode == 0;
         }
 
         public static ExecutionResult ExecuteGitCommand(string arguments, float timeoutSec = 10.0f)
