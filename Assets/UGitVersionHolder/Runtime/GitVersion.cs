@@ -4,7 +4,7 @@ namespace UGitVersionHolder.Runtime
 {
     public static class GitVersion
     {
-        private static GitVersionContent _content = null;
+        private static GitVersionContent _content;
 
         public static string GetHash()
         {
