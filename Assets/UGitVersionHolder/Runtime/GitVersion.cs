@@ -4,14 +4,27 @@ namespace UGitVersionHolder.Runtime
 {
     public static class GitVersion
     {
-        private static GitVersionContent _content = null;
+        private static GitVersionContent _content;
 
         public static string GetHash()
         {
             if (_content == null)
+            {
                 Initialize();
+            }
 
-            return _content.hash;
+            if (_content != null)
+            {
+                return _content.hash;
+            }
+            else
+            {
+#if UNITY_EDITOR
+                return "(IN EDITOR)";
+#else
+                return "(NULL)";
+#endif
+            }
         }
         
         private static void Initialize()
