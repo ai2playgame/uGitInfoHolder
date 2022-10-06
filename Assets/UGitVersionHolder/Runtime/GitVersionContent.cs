@@ -6,5 +6,6 @@ namespace UGitVersionHolder.Runtime
     {
         public const string AssetName = "GitVersionContent";
         public string hash;
+        public string date;
     }
 }

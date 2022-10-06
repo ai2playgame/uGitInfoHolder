@@ -13,6 +13,7 @@ namespace UGitVersionHolder.Editor
         private const string GitVersionContentDirectory = GitVersionContentRootDirectory + "Resources/";
         private const string VersionContentPath = GitVersionContentDirectory + GitVersionContent.AssetName + ".asset";
         
+        [MenuItem("Git/Update GitVersion Content")]
         private static void GenerateGitVersionContent()
         {
             GenerateGitignore();

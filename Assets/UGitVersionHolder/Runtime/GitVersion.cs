@@ -8,10 +8,7 @@ namespace UGitVersionHolder.Runtime
 
         public static string GetHash()
         {
-            if (_content == null)
-            {
-                Initialize();
-            }
+            if (_content == null) InitializeLoad();
 
             if (_content != null)
             {
@@ -26,8 +23,22 @@ namespace UGitVersionHolder.Runtime
 #endif
             }
         }
+
+        public static string GetDate()
+        {
+            if (_content == null) InitializeLoad();
+
+            if (_content != null)
+            {
+                return _content.date;
+            }
+            else
+            {
+                return "XXXX";
+            }
+        }
         
-        private static void Initialize()
+        private static void InitializeLoad()
         {
             _content = Resources.Load<GitVersionContent>(GitVersionContent.AssetName);
         }
