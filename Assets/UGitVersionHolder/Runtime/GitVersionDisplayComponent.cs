@@ -6,7 +6,7 @@ namespace UGitVersionHolder.Runtime
     {
         private void OnGUI()
         {
-            GUI.Label(new Rect(30, 30, 400, 100), $"Ver. {GitVersion.GetHash()}");
+            GUI.Label(new Rect(30, 30, 400, 100), $"Ver. {GitVersion.GetHash()}_{GitVersion.GetDate()}");
         }
     }
 }
