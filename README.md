@@ -11,6 +11,11 @@
 ```csharp
 using UGitVersionHolder.Runtime;
 
-string hash = GitVersion.hash;
+string hash = GitVersion.GetHash();
+```
+
+# 最新コミットの日付を取得する方法
+```csharp
+string date = GitVersion.GetDate(); // 9月16日なら「0916」と帰ってくる
 ```
 
